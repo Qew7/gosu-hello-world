@@ -14,15 +14,23 @@ class HelloWorld < Gosu::Window
   end
 
   def update
-    @image_text = Gosu::Image.from_text((cat_api_client.cat_fact || 'Hello World'), 20, # This part is a problem, it constantly creates new Gosu::Image objects
-                                        bold: [true, false].sample,
-                                        italic: [true, false].sample,
-                                        width: 400)
-    p ObjectSpace.each_object(Gosu::Image).count
+    @time ||= Time.now
+    if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || (Time.now - @time).to_i > 10
+      update_text
+      @time = Time.now
+    end
   end
 
   def draw
     @image_text.draw_rot(WIDTH / 2, HEIGHT / 2, 0, Math.cos(Gosu.milliseconds / 130))
+  end
+
+  def update_text
+    @fact = cat_api_client.cat_fact
+    @image_text = Gosu::Image.from_text((@fact || 'Hello World'), 19,
+                                        bold: [true, false].sample,
+                                        italic: [true, false].sample,
+                                        width: 399)
   end
 end
 
@@ -32,14 +40,8 @@ class CatApiClient
   base_uri 'meowfacts.herokuapp.com'
 
   def cat_fact
-    @time ||= Time.now
-    if @fact.nil? || (Time.now - @time).to_i > 10
-      response = self.class.get('')
-      @time = Time.now
-      @fact = JSON.parse(response.body)['data'].first if response.code == 200
-    else
-      @fact
-    end
+    response = self.class.get('')
+    JSON.parse(response.body)['data'].first if response.code == 200
   end
 end
 
