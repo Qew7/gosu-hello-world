@@ -1,5 +1,6 @@
 require 'gosu'
 require 'httparty'
+require_relative 'src/hello_world'
 
 WIDTH, HEIGHT = 640, 480
 
@@ -15,6 +16,7 @@ class HelloWorld < Gosu::Window
 
   def update
     @time ||= Time.now
+
     if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || (Time.now - @time).to_i > 10
       update_text
       @time = Time.now
@@ -31,17 +33,6 @@ class HelloWorld < Gosu::Window
                                         bold: [true, false].sample,
                                         italic: [true, false].sample,
                                         width: 399)
-  end
-end
-
-class CatApiClient
-  include HTTParty
-
-  base_uri 'meowfacts.herokuapp.com'
-
-  def cat_fact
-    response = self.class.get('')
-    JSON.parse(response.body)['data'].first if response.code == 200
   end
 end
 
