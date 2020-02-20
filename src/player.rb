@@ -18,8 +18,8 @@ class Player
   end
 
   def draw
-    @images[Gosu.milliseconds / 200 % 2].draw(x - 10, y - 20, 0, 0.5, 0.5, COLOR)
-    @images[2].draw_rot(x, y - 5, 0, 90, 1, 0.5, 0.5, 1.0, COLOR)
+    @images[Gosu.milliseconds / 200 % 2].draw(x - 10, y - 20, 1, 0.5, 0.5, COLOR)
+    @images[2].draw_rot(x, y - 5, 1, 90, 1, 0.5, 0.5, 1.0, COLOR)
   end
 
   def move(dir)
