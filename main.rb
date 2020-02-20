@@ -20,8 +20,8 @@ class HelloWorld < Gosu::Window
   end
 
   def update
+    @objects.each { |obj| obj.update }
     milliseconds = Gosu.milliseconds
-    handle_input
     if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || milliseconds % 1000 == 0
       update_text
     end
@@ -36,13 +36,6 @@ class HelloWorld < Gosu::Window
   end
 
   private
-
-  def handle_input
-    @player.move(:left) if Gosu.button_down?(Gosu::KB_LEFT)
-    @player.move(:right) if Gosu.button_down?(Gosu::KB_RIGHT)
-    @player.move(:up) if Gosu.button_down?(Gosu::KB_UP)
-    @player.move(:down) if Gosu.button_down?(Gosu::KB_DOWN)
-  end
 
   def update_text
     @fact = cat_api_client.cat_fact
