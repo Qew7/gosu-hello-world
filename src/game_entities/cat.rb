@@ -1,8 +1,6 @@
-class Cat
+class Cat < GameEntity
   IMAGE_PATH = 'src/media/cat.jpg'
   SCALE = 0.125
-
-  attr_reader :x, :y, :window, :image
 
   def initialize(window, x, y)
     @window = window
@@ -10,6 +8,8 @@ class Cat
     @y = y
     @image = cat_image
   end
+
+  def update; end
 
   def draw
     scale_x = SCALE * (image.width.to_f / window.width)

@@ -1,10 +1,9 @@
-class Player
+class Player < GameEntity
   COLOR = 0xff_308000
-
-  attr_reader :x, :y, :window
+  IMAGE_PATH = 'src/media/player.png'
 
   def initialize(window, x, y)
-    @images = Gosu::Image.load_tiles('src/media/player.png', 40, 50)
+    @images = Gosu::Image.load_tiles(IMAGE_PATH, 40, 50)
     @window = window
     @x = x
     @y = y
