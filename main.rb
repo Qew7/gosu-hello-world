@@ -39,7 +39,7 @@ class HelloWorld < Gosu::Window
 
   def update_text
     @fact = cat_api_client.cat_fact
-    @image_text = Gosu::Image.from_text((@fact || 'Hello World'), 19,
+    @image_text = Gosu::Image.from_text((@fact || 'Hello World'), HEIGHT / 15,
                                         bold: [true, false].sample,
                                         italic: [true, false].sample,
                                         width: 399)
