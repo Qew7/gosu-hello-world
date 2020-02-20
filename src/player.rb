@@ -1,7 +1,7 @@
 class Player
   COLOR = 0xff_308000
 
-  attr_reader :x, :y
+  attr_reader :x, :y, :window
 
   def initialize(window, x, y)
     @images = Gosu::Image.load_tiles('src/media/player.png', 40, 50)
@@ -25,14 +25,13 @@ class Player
   def move(dir)
     case dir
     when :down
-      @y += 1
+      @y += 1 unless @y >= window.height
     when :up
-      @y -= 1
+      @y -= 1 unless @y <= 0
     when :left
-      @x -= 1
+      @x -= 1 unless @x <=0
     when :right
-      @x += 1
+      @x += 1 unless @x >= window.width
     end
-    p "x: #{@x}, y: #{@y}"
   end
 end

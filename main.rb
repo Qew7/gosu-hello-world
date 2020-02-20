@@ -17,10 +17,7 @@ class HelloWorld < Gosu::Window
   end
 
   def update
-    @player.move(:left) if Gosu.button_down?(Gosu::KB_LEFT)
-    @player.move(:right) if Gosu.button_down?(Gosu::KB_RIGHT)
-    @player.move(:up) if Gosu.button_down?(Gosu::KB_UP)
-    @player.move(:down) if Gosu.button_down?(Gosu::KB_DOWN)
+    handle_input
     @time ||= Time.now
     if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || (Time.now - @time).to_i > 10
       update_text
@@ -31,6 +28,15 @@ class HelloWorld < Gosu::Window
   def draw
     @player.draw
     @image_text.draw_rot(WIDTH / 2, HEIGHT / 2, 0, Math.cos(Gosu.milliseconds / 130))
+  end
+
+  private
+
+  def handle_input
+    @player.move(:left) if Gosu.button_down?(Gosu::KB_LEFT)
+    @player.move(:right) if Gosu.button_down?(Gosu::KB_RIGHT)
+    @player.move(:up) if Gosu.button_down?(Gosu::KB_UP)
+    @player.move(:down) if Gosu.button_down?(Gosu::KB_DOWN)
   end
 
   def update_text
