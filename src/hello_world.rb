@@ -1,4 +1,3 @@
-require_relative 'player'
-require_relative 'cat'
-require_relative 'clients/cat_api_client'
-require_relative 'clients/cat_images_api_client'
+require_relative 'game_entity'
+Dir[File.join(__dir__, 'game_entities', '*.rb')].each { |entity| require_relative entity.chomp('.rb') }
+Dir[File.join(__dir__, 'clients', '*.rb')].each { |client| require_relative client.chomp('.rb') }
