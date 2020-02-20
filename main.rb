@@ -1,9 +1,10 @@
+require 'open-uri'
 require 'gosu'
 require 'httparty'
 require 'pry'
 require_relative 'src/hello_world'
 
-WIDTH, HEIGHT = 640, 480
+WIDTH, HEIGHT = 800, 600
 
 class HelloWorld < Gosu::Window
   attr_reader :cat_api_client
@@ -14,20 +15,24 @@ class HelloWorld < Gosu::Window
     self.caption = 'HW: Random Cat Facts'
     @cat_api_client = CatApiClient.new
     @player = Player.new(self, WIDTH / 2, (HEIGHT / 2) - 30)
+    @objects = []
+    @objects << @player
   end
 
   def update
+    milliseconds = Gosu.milliseconds
     handle_input
-    @time ||= Time.now
-    if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || (Time.now - @time).to_i > 10
+    if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || milliseconds % 1000 == 0
       update_text
-      @time = Time.now
+    end
+    if milliseconds % 500 == 0
+      @objects << Cat.new(self, rand(0..HEIGHT), rand(0..WIDTH))
     end
   end
 
   def draw
-    @player.draw
-    @image_text.draw_rot(WIDTH / 2, HEIGHT / 2, 0, Math.cos(Gosu.milliseconds / 130))
+    @objects.each {|obj| obj.draw }
+    @image_text.draw_rot(WIDTH / 2, HEIGHT / 2, 2, Math.cos(Gosu.milliseconds / 130))
   end
 
   private
