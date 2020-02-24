@@ -21,16 +21,18 @@ class Player < GameEntity
     @images[2].draw_rot(x, y - 5, 1, 90, 1, 0.5, 0.5, 1.0, COLOR)
   end
 
+  private
+
   def move(dir)
     case dir
     when :down
-      @y += 1 unless @y >= window.height
+      @y += 1 unless y >= window.height
     when :up
-      @y -= 1 unless @y <= 0
+      @y -= 1 unless y <= 0
     when :left
-      @x -= 1 unless @x <=0
+      @x -= 1 unless x <= 0
     when :right
-      @x += 1 unless @x >= window.width
+      @x += 1 unless x >= window.width
     end
   end
 end
