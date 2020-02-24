@@ -25,7 +25,7 @@ class Cat < GameEntity
   def cat_image
     url = CatImagesApiClient.new.cat_image_url
     File.open(IMAGE_PATH, 'wb') do |fo|
-      fo.write(open(url).read)
+      fo.write(URI.open(url).read)
     end
     Gosu::Image.new(IMAGE_PATH, retro: true)
   end
