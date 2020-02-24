@@ -6,8 +6,10 @@ class CatFact < GameEntity
   end
 
   def update
-    if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || Time.now.sec % 10 == 0
+    @time ||= Time.now
+    if Gosu.button_down?(Gosu::KB_RETURN) || @fact.nil? || (Time.now - @time).to_i > 10
       update_text
+      @time = Time.now
     end
   end
 

@@ -19,9 +19,11 @@ class HelloWorld < Gosu::Window
   end
 
   def update
+    @time ||= Time.now
     @objects.each { |obj| obj.update }
-    if Time.now.sec % 7 == 0
+    if (Time.now - @time).to_i > 6
       @objects << Cat.new(self)
+      @time = Time.now
     end
   end
 
