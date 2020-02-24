@@ -20,7 +20,7 @@ class HelloWorld < Gosu::Window
 
   def update
     @objects.each { |obj| obj.update }
-    if Gosu.milliseconds % 500 == 0
+    if Time.now.sec % 7 == 0
       @objects << Cat.new(self, rand(0..HEIGHT), rand(0..WIDTH))
     end
   end
