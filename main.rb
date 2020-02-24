@@ -7,28 +7,29 @@ require_relative 'src/hello_world'
 WIDTH, HEIGHT = 800, 600
 
 class HelloWorld < Gosu::Window
+  attr_reader :objects
   def initialize
     super WIDTH, HEIGHT
 
     self.caption = 'HW: Random Cat Facts'
+    @objects = []
     @player = Player.new(self, WIDTH / 2, (HEIGHT / 2) - 30)
     cat_fact = CatFact.new
-    @objects = []
     @objects << @player
     @objects << cat_fact
   end
 
   def update
     @time ||= Time.now
-    @objects.each { |obj| obj.update }
+    objects.each { |obj| obj.update }
     if (Time.now - @time).to_i > 6
-      @objects << Cat.new(self)
+      objects << Cat.new(self)
       @time = Time.now
     end
   end
 
   def draw
-    @objects.each {|obj| obj.draw }
+    objects.each { |obj| obj.draw }
   end
 end
 

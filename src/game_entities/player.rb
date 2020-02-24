@@ -2,11 +2,15 @@ class Player < GameEntity
   COLOR = 0xff_308000
   IMAGE_PATH = 'src/media/player.png'
 
+  attr_reader :score
+
   def initialize(window, x, y)
     @images = Gosu::Image.load_tiles(IMAGE_PATH, 40, 50)
     @window = window
     @x = x
     @y = y
+    @score = Score.new(window)
+    window.objects << @score
   end
 
   def update
@@ -14,6 +18,7 @@ class Player < GameEntity
     move(:right) if Gosu.button_down?(Gosu::KB_RIGHT)
     move(:up) if Gosu.button_down?(Gosu::KB_UP)
     move(:down) if Gosu.button_down?(Gosu::KB_DOWN)
+    collect_cats(cats)
   end
 
   def draw
@@ -22,6 +27,21 @@ class Player < GameEntity
   end
 
   private
+
+  def cats
+    window.objects.select { |obj| obj.cat? }
+  end
+
+  def collect_cats(cats)
+    cats.each do |cat|
+      collect_cat(cat) if Gosu.distance(x, y, cat.x, cat.y) < 30
+    end
+  end
+
+  def collect_cat(cat)
+    cat.collected
+    score.add(1)
+  end
 
   def move(dir)
     case dir

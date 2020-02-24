@@ -10,4 +10,8 @@ class GameEntity
   def draw
     raise NotImplementedError
   end
+
+  def method_missing(method, *args, &block)
+    false
+  end
 end

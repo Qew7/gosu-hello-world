@@ -20,6 +20,14 @@ class Cat < GameEntity
     image.draw_rot(x, y, 0, Math.sin(Gosu.milliseconds / 200), 0.5, 0.5, scale_x, scale_y)
   end
 
+  def cat?
+    true
+  end
+
+  def collected
+    window.objects.delete(self)
+  end
+
   private
 
   def cat_image
